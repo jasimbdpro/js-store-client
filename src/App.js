@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Nayoks></Nayokssssssssssss>
+        <Nayoks></Nayoks>
         <ul>
           {nayok.map(nk => <li>{nk.name}</li>)}
         </ul>
