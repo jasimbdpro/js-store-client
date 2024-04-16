@@ -5,16 +5,18 @@ import products from '../../fakeData/products.json'
 const Shop = () => {
     const [productn, setProductn] = useState(products.slice(0, 11));
     return (
-        <div>
-            <h1>This is Shop</h1>
-            <h3>
-                {productn.length}
-            </h3>
-            <ul>
-                {productn.map(product => (
-                    <li key={product.id}>{product.name}</li>
-                ))}
-            </ul>
+        <div className='shop-container'>
+            <div className="product-container">
+                <ul>
+                    {productn.map(product => (
+                        <li key={product.id}>{product.name}</li>
+                    ))}
+                </ul>
+            </div>
+            <div className="cart-container">
+                <h3>This is cart</h3>
+            </div>
+
         </div>
     );
 };
