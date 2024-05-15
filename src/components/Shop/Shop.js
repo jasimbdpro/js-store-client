@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import './Shop.css';
-import products from '../../fakeData/products.json'
+import productData from '../../fakeData/products.json'
 import Product from '../Product/Product';
 import Cart from '../Cart/Cart';
 
 const Shop = () => {
-    const [productn, setProductn] = useState(products.slice(0, 10));
+    const products = productData.slice(0, 15);
     const [cart, setCart] = useState([]);
     const handleAddProduct = (product) => {
         const newCart = [...cart, product];
@@ -15,10 +15,10 @@ const Shop = () => {
         <div className='shop-container'>
             <div className="product-container">
 
-                {productn.map(pd =>
+                {products.map(i =>
                     <Product
                         handleAddProduct={handleAddProduct}
-                        product={pd}
+                        product={i}
                     ></Product>
                 )}
 
