@@ -21,7 +21,7 @@ function App() {
           <Route path="/" element={<Shop></Shop>} />
           <Route path="/ema-john-simple" element={<Shop></Shop>} />
           <Route path="/review" element={<Review></Review>} />
-          <Route path="/invertory" element={<Inventory></Inventory>} />
+          <Route path="/inventory" element={<Inventory></Inventory>} />
           <Route path="*" element={<NotFound></NotFound>} />
         </Routes>
       </Router>
