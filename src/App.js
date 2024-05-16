@@ -3,7 +3,7 @@ import './App.css';
 import Header from "./components/Header/Header";
 import Shop from './components/Shop/Shop';
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Routes,
   Route,
   Link
@@ -15,24 +15,13 @@ function App() {
   return (
     <div>
       <Header></Header>
-      <Router>
+      <Router basename="/ema-john-simple">
         <Routes>
-          <Route path="/shop" element={<Shop></Shop>} />
-          <Route path="/ema-john-simple/shop" element={<Shop></Shop>} />
-
-
           <Route exact path="/" element={<Shop></Shop>} />
-          <Route path="/ema-john-simple" element={<Shop></Shop>} />
-
+          <Route path="/shop" element={<Shop></Shop>} />
           <Route path="/review" element={<Review></Review>} />
-          <Route path="/ema-john-simple/review" element={<Review></Review>} />
-
-
           <Route path="/inventory" element={<Inventory></Inventory>} />
-          <Route path="/ema-john-simple/inventory" element={<Inventory></Inventory>} />
-
           <Route path="*" element={<NotFound></NotFound>} />
-          <Route path="/ema-john-simple/*" element={<NotFound></NotFound>} />
         </Routes>
       </Router>
     </div>
