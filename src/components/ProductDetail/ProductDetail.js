@@ -5,7 +5,7 @@ import productData from '../../fakeData/products.json'
 
 const ProductDetail = () => {
     const { productId } = useParams()
-    const product = productData.find(i => i.productId)
+    const product = productData.find(i => i.id === productId);
     console.log(product)
     return (
         <div>
