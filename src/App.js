@@ -15,7 +15,7 @@ function App() {
   return (
     <div>
       <Header></Header>
-      <Router basename="/ema-john-simple">
+      <Router basename='ema-john-simple'>
         <Routes>
           <Route exact path="/" element={<Shop></Shop>} />
           <Route path="/shop" element={<Shop></Shop>} />

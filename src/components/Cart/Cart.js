@@ -34,9 +34,8 @@ const Cart = (props) => {
             <p><small>Tax + Vat: {tax}</small></p>
             <p>Total Price: {grandTotal}</p>
             <br />
-            <Link>
+            <Link to="/review">
                 <button className='main-button'>Review Order</button>
-
             </Link>
 
         </div>
