@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Cart = (props) => {
     const cart = props.cart;
-    console.log(cart);
+    // console.log(cart);
     // const totalPrice = cart.reduce((total, prd) => total + prd.price, 0);
     let total = 0;
     for (let i = 0; i < cart.length; i++) {
@@ -17,15 +18,12 @@ const Cart = (props) => {
     else if (total > 200) {
         shipping = 4.99;
     }
-    else if (total == 0) {
+    else if (total === 0) {
         shipping = 0;
     }
     const tax = (total / 10).toFixed(2);
     const grandTotal = (total + shipping + Number(tax)).toFixed(2);
-    const formatNumber = num => {
-        const precision = num.toFixed(2);
-        return Number(precision);
-    }
+
 
     return (
         <div>
@@ -35,6 +33,12 @@ const Cart = (props) => {
             <p><small>shipping Cost: {shipping}</small></p>
             <p><small>Tax + Vat: {tax}</small></p>
             <p>Total Price: {grandTotal}</p>
+            <br />
+            <Link>
+                <button className='main-button'>Review Order</button>
+
+            </Link>
+
         </div>
     );
 };

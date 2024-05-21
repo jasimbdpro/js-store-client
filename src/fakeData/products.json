@@ -156,19 +156,6 @@
         "quantity": 0
     },
     {
-        "id": "9ed5255464ba",
-        "category": "Men's Pants",
-        "name": "PRIMEBLUE SST TRACK PANTS",
-        "seller": "Addidas",
-        "price": 63,
-        "stock": 46,
-        "ratings": 4,
-        "ratingsCount": 50,
-        "img": "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/52b5fde5829a4a04820dacf50127b969_9366/Adicolor_Classics_Primeblue_SST_Track_Pants_Blue_H06714_21_model.jpg",
-        "shipping": 20,
-        "quantity": 0
-    },
-    {
         "id": "0163a563f43d",
         "category": "Men's Pants",
         "name": "TIRO 21 TRACK PANTS",
@@ -192,19 +179,6 @@
         "ratingsCount": 1239,
         "img": "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/9c7058d8677742ac8519ac3f009cdcf4_9366/Tiro_21_Track_Pants_Black_GH7305_21_model.jpg",
         "shipping": 27,
-        "quantity": 0
-    },
-    {
-        "id": "f55fcf6fa5f2",
-        "category": "Men's Pants",
-        "name": "TIRO PANTS BLACK GOLD",
-        "seller": "Addidas",
-        "price": 115,
-        "stock": 26,
-        "ratings": 5,
-        "ratingsCount": 4557,
-        "img": "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/c447324cf06544b78105ade500fd9e2f_9366/Tiro_Pants_Black_HI1073_21_model.jpg",
-        "shipping": 33,
         "quantity": 0
     },
     {

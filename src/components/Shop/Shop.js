@@ -17,8 +17,10 @@ const Shop = () => {
 
                 {products.map(i =>
                     <Product
+                        showAddToCart={true}
                         handleAddProduct={handleAddProduct}
                         product={i}
+                        key={i.id}
                     ></Product>
                 )}
 
