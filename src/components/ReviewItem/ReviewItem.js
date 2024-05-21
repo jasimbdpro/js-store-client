@@ -11,6 +11,7 @@ const ReviewItem = (props) => {
             <div>
                 <h4 className='product-name'>{name}</h4>
                 <h4>Quantity: {quantity}</h4>
+                <p><small>$ {price}</small></p>
                 <button className='main-button' onClick={() => removeProduct(id)}>Remove Item</button>
             </div>
 

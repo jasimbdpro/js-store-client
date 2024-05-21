@@ -3,6 +3,9 @@ import { getShoppingCart, removeFromDb } from '../../utilities/fakedb';
 import productData from '../../fakeData/products.json'
 import Product from '../Product/Product';
 import ReviewItem from '../ReviewItem/ReviewItem';
+import Cart from '../Cart/Cart';
+import "./Review.css"
+
 
 
 const Review = () => {
@@ -25,11 +28,15 @@ const Review = () => {
 
     }, [])
     return (
-        <div>
-            <h1>Cart Item: {cart.length} </h1>
-            {
-                cart.map(i => <ReviewItem removeProduct={removeProduct} key={i.id} product={i}></ReviewItem>)
-            }
+        <div className='Review'>
+            <div>
+                {
+                    cart.map(i => <ReviewItem removeProduct={removeProduct} key={i.id} product={i}></ReviewItem>)
+                }
+            </div>
+            <div>
+                <Cart cart={cart}></Cart>
+            </div>
 
 
         </div>
