@@ -9,22 +9,24 @@ const Shop = () => {
     const products = productData.slice(0, 15);
     const [cart, setCart] = useState([]);
     const handleAddProduct = (product) => {
-        const newCart = [...cart, product];
+        const sameProduct = cart.find(i => i.id === product.id)
+        let newCart;
+        let count = 1;
+        if (sameProduct) {
+            count = sameProduct.quantity + 1;
+            sameProduct.quantity = count;
+            const others = cart.filter(i => i.id !== product.id)
+            newCart = [...others, sameProduct]
+        }
+        else {
+            product.quantity = 1;
+            newCart = [...cart, product];
+        }
         setCart(newCart);
+        // console.log(cart)
         addToDb(product.id)
     }
-    useEffect(() => {
-        //cart
-        const savedCart = getShoppingCart()
-        const productIds = Object.keys(savedCart);
-        const cartProducts = productIds.map(id => {
-            const product = productData.find(i => i.id === id)
-            product.quantity = savedCart[id]
-            return product;
-        });
-        setCart(cartProducts);
 
-    }, [])
     return (
         <div className='shop-container'>
             <div className="product-container">
