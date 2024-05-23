@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { deleteShoppingCart, getShoppingCart, removeFromDb } from '../../utilities/fakedb';
 import productData from '../../fakeData/products.json'
-import Product from '../Product/Product';
 import ReviewItem from '../ReviewItem/ReviewItem';
 import Cart from '../Cart/Cart';
 import "./Review.css"
@@ -37,7 +36,7 @@ const Review = () => {
     }, [])
     let thankyou;
     if (orderPlaced) {
-        thankyou = <img src={happyImage} />
+        thankyou = <img src={happyImage} alt='happyimage' />
     }
     else { }
     return (
