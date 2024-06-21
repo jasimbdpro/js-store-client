@@ -9,7 +9,7 @@ const Product = (props) => {
     // console.log(props)
     return (
         <div className='product'>
-            <div>
+            <div style={{ marginRight: '10px' }}>
                 <img width="300" className='product-image' src={img} alt="" />
             </div>
             <div>

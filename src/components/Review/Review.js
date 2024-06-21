@@ -36,7 +36,7 @@ const Review = () => {
     }, [])
     let thankyou;
     if (orderPlaced) {
-        thankyou = <img src={happyImage} alt='happyimage' />
+        thankyou = <img style={{ width: '80%', margin: '10px', padding: '10px', borderRadius: '30px' }} src={happyImage} alt='happyimage' />
     }
     else { }
     return (
