@@ -3,7 +3,7 @@ import './App.css';
 import Header from "./components/Header/Header";
 import Shop from './components/Shop/Shop';
 import {
-  BrowserRouter as Router,
+  HashRouter,
   Routes,
   Route
 } from "react-router-dom";
@@ -13,20 +13,17 @@ import NotFound from './components/NotFound/NotFound';
 import ProductDetail from './components/ProductDetail/ProductDetail';
 function App() {
   return (
-    <Router basename='ema-john-simple'>
+    <HashRouter>
       <Header></Header>
       <Routes>
         <Route exact path="/" element={<Shop></Shop>} />
         <Route path="/shop" element={<Shop></Shop>} />
-        <Route path="/ema-john-simple/shop" element={<Shop></Shop>} />
         <Route path="/review" element={<Review></Review>} />
-        <Route path="ema-john-simple/review" element={<Review></Review>} />
         <Route path="/inventory" element={<Inventory></Inventory>} />
-        <Route path="ema-john-simple/inventory" element={<Inventory></Inventory>} />
         <Route path="/product/:productId" element={<ProductDetail></ProductDetail>} />
         <Route path="*" element={<NotFound></NotFound>} />
       </Routes>
-    </Router>
+    </HashRouter>
   );
 }
 export default App;
