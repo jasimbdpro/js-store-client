@@ -13,13 +13,18 @@ import NotFound from './components/NotFound/NotFound';
 import ProductDetail from './components/ProductDetail/ProductDetail';
 import Shipment from './components/Shipment/Shipment';
 import Login from './components/Login/Login';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+
 export const UserContext = createContext();
+
 function App() {
+
   const [loggedInUser, setLoggedInUser] = useState({});
+
   return (
     <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
       <HashRouter>
-        {/* <p>Email: {loggedInUser.name} </p> */}
+        <p>Email: {loggedInUser.name} </p>
 
         <Header></Header>
         <Routes>
@@ -27,11 +32,13 @@ function App() {
           <Route path="/shop" element={<Shop></Shop>} />
           <Route path="/review" element={<Review></Review>} />
           <Route path="/inventory" element={<Inventory></Inventory>} />
-          <Route path="/shipment" element={<Shipment></Shipment>} />
+          <Route path="/shipment" element={<PrivateRoute></PrivateRoute>} />
           <Route path="/login" element={<Login></Login>} />
           <Route path="/product/:productId" element={<ProductDetail></ProductDetail>} />
           <Route path="*" element={<NotFound></NotFound>} />
+
         </Routes>
+
       </HashRouter>
     </UserContext.Provider>
   );
