@@ -31,8 +31,12 @@ function App() {
           <Route exact path="/" element={<Shop></Shop>} />
           <Route path="/shop" element={<Shop></Shop>} />
           <Route path="/review" element={<Review></Review>} />
-          <Route path="/inventory" element={<Inventory></Inventory>} />
-          <Route path="/shipment" element={<PrivateRoute></PrivateRoute>} />
+          <Route path="/inventory" element={
+            <PrivateRoute Component={Inventory} />
+          } />
+          <Route path="/shipment" element={
+            <PrivateRoute Component={Shipment} />
+          } />
           <Route path="/login" element={<Login></Login>} />
           <Route path="/product/:productId" element={<ProductDetail></ProductDetail>} />
           <Route path="*" element={<NotFound></NotFound>} />
@@ -40,7 +44,7 @@ function App() {
         </Routes>
 
       </HashRouter>
-    </UserContext.Provider>
+    </UserContext.Provider >
   );
 }
 export default App;

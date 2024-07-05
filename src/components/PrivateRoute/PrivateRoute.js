@@ -1,13 +1,18 @@
 import { useContext } from "react";
-import { Navigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
 
-const PrivateRoute = ({ Component }) => {
-
+const PrivateRoute = ({ Component, ...rest }) => {
+    const location = useLocation();
+    const navigate = useNavigate();
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
 
-    // Your authentication logic goes here...
+    if (!loggedInUser) {
+        navigate('/login', { state: { from: location } })
+        // return <Navigate to="login" state={{ from: location }} replace></Navigate>
+    }
+    return loggedInUser ? <Component /> : null;
+}
 
-    return loggedInUser.email ? <Component /> : <Navigate to="/login" />;
-};
+
 export default PrivateRoute;

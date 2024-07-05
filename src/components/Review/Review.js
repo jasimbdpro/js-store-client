@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Review = () => {
+
     const navigate = useNavigate();
     const [cart, setCart] = useState([]);
     const [orderPlaced, setOrderPlaced] = useState(false)

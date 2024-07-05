@@ -2,9 +2,11 @@ import React, { useContext, useState } from 'react';
 import { initializeApp } from 'firebase/app'
 import { createUserWithEmailAndPassword, FacebookAuthProvider, getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import { UserContext } from '../../App';
+import { useLocation } from 'react-router-dom';
 
 
 const Login = () => {
+    const location = useLocation()
     const [newUser, setNewUser] = useState(false);
     const [accountUser, setAccountUser] = useState({
         isSignedIn: false,
@@ -179,7 +181,7 @@ const Login = () => {
         });
 
     }
-
+    console.log(location)
 
     return (
         <div style={{ textAlign: 'center' }} >
