@@ -2,15 +2,16 @@ import React, { useContext, useState } from 'react';
 import { initializeApp } from 'firebase/app'
 import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import { UserContext } from '../../App';
-import { useLocation } from 'react-router-dom';
 import firebaseConfig from '../../utilities/firebaseConfig';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
     const app = initializeApp(firebaseConfig)
+    const location = useLocation();
+    const navigate = useNavigate();
     const auth = getAuth(app);
     const [loggedInUserShared, setLoggedInUserShared] = useContext(UserContext);
-    const location = useLocation()
     const [newUser, setNewUser] = useState(false);
     const [accountUser, setAccountUser] = useState({
         isSignedIn: false,
@@ -46,7 +47,8 @@ const Login = () => {
                     }
                     setAccountUser(signedInUser)
                     setLoggedInUserShared(signedInUser)
-                    console.log(accountUser)
+                    navigate(location.state?.from || "/", { replace: true });
+                    // console.log(accountUser)
                 }
 
             })
@@ -128,6 +130,8 @@ const Login = () => {
                     const newUserInfo = { ...accountUser, name: user.displayName, success: true, error: '' }
                     setAccountUser(newUserInfo)
                     setLoggedInUserShared(newUserInfo)
+                    navigate(location.state?.from || "/", { replace: true });
+
 
                     // ...
                 })
@@ -149,8 +153,8 @@ const Login = () => {
         });
 
     }
-    console.log(location)
 
+    console.log(location.state?.from)
     return (
         <div style={{ textAlign: 'center' }} >
 

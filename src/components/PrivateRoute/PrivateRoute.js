@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
 
@@ -8,11 +8,15 @@ const PrivateRoute = ({ Component, ...rest }) => {
     const [loggedInUserShared, setLoggedInUserShared] = useContext(UserContext);
     console.log(loggedInUserShared)
 
-    if (!loggedInUserShared) {
-        navigate('/login', { state: { from: location } })
-    }
-    return loggedInUserShared ? <Component /> : null;
-}
+    useEffect(() => {
+        if (!loggedInUserShared.email) {
+            navigate('/login', { state: { from: location } });
+        }
+    }, [loggedInUserShared, location, navigate]);
+
+
+    return loggedInUserShared.email ? <Component /> : null
+};
 
 
 export default PrivateRoute;
