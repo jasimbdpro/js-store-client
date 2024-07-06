@@ -5,13 +5,13 @@ import { UserContext } from "../../App";
 const PrivateRoute = ({ Component, ...rest }) => {
     const location = useLocation();
     const navigate = useNavigate();
-    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    const [loggedInUserShared, setLoggedInUserShared] = useContext(UserContext);
+    console.log(loggedInUserShared)
 
-    if (!loggedInUser) {
+    if (!loggedInUserShared) {
         navigate('/login', { state: { from: location } })
-        // return <Navigate to="login" state={{ from: location }} replace></Navigate>
     }
-    return loggedInUser ? <Component /> : null;
+    return loggedInUserShared ? <Component /> : null;
 }
 
 

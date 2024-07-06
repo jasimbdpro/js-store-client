@@ -19,12 +19,12 @@ export const UserContext = createContext();
 
 function App() {
 
-  const [loggedInUser, setLoggedInUser] = useState({});
+  const [loggedInUserShared, setLoggedInUserShared] = useState({});
 
   return (
-    <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
+    <UserContext.Provider value={[loggedInUserShared, setLoggedInUserShared]}>
       <HashRouter>
-        <p>Email: {loggedInUser.name} </p>
+        <p>Email: {loggedInUserShared.name} </p>
 
         <Header></Header>
         <Routes>
