@@ -3,9 +3,12 @@ import { initializeApp } from 'firebase/app'
 import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import { UserContext } from '../../App';
 import { useLocation } from 'react-router-dom';
+import firebaseConfig from '../../utilities/firebaseConfig';
 
 
 const Login = () => {
+    const app = initializeApp(firebaseConfig)
+    const auth = getAuth(app);
     const [loggedInUserShared, setLoggedInUserShared] = useContext(UserContext);
     const location = useLocation()
     const [newUser, setNewUser] = useState(false);
@@ -20,27 +23,21 @@ const Login = () => {
         error: '',
     });
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyCCuIunyXGA3Qxv8dJusKOPtr3BEkpxMYQ",
-        authDomain: "ema-john-simple-905c1.firebaseapp.com",
-        databaseURL: "https://ema-john-simple-905c1-default-rtdb.firebaseio.com",
-        projectId: "ema-john-simple-905c1",
-        storageBucket: "ema-john-simple-905c1.appspot.com",
-        messagingSenderId: "620555579422",
-        appId: "1:620555579422:web:4f78697948a35cb4ab7e0f"
-    }
-    const app = initializeApp(firebaseConfig)
-    const auth = getAuth(app);
-
-    const provider = new GoogleAuthProvider();
     const GoogleSignInHandler = () => {
+        const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider)
             .then((result) => {
+                // This gives you a Google Access Token. You can use it to access the Google API.
                 const credential = GoogleAuthProvider.credentialFromResult(result);
+                console.log(result)
                 const token = credential.accessToken;
-                console.log(token)
-                if (result.accountUser) {
-                    const { displayName, photoURL, email } = result.accountUser;
+                // The signed-in user info.
+                // console.log(token)
+                if (result.user) {
+                    // IdP data available using getAdditionalUserInfo(result)
+                    //This below part ↓↓↓ is not included in firebase docs 
+                    //destructing the result.user object (from the remote server)
+                    const { displayName, photoURL, email } = result.user;
                     const signedInUser = {
                         isSignedIn: true,
                         name: displayName,
@@ -48,11 +45,13 @@ const Login = () => {
                         photo: photoURL,
                     }
                     setAccountUser(signedInUser)
+                    setLoggedInUserShared(signedInUser)
+                    console.log(accountUser)
                 }
 
             })
             .catch((error) => {
-
+                // Handle Errors here.
                 const errorMessage = error.message;
                 console.log(errorMessage)
             })
@@ -60,20 +59,21 @@ const Login = () => {
 
 
     const GoogleSignOutHandler = () => {
-        const auth = getAuth()
         signOut(auth)
             .then(() => {
 
-                const accountUser = {
+                const signedOutUser = {
                     inSignedIn: false,
                     name: '',
                     email: '',
                     photo: ''
                 }
-                setAccountUser(accountUser)
+                setAccountUser(signedOutUser)
+                setLoggedInUserShared(signedOutUser)
             })
             .catch((error) => {
-                console.log(error)
+                // An error happened.
+
             })
     }
     const InputTextBlurHandler = (event) => {
@@ -96,12 +96,11 @@ const Login = () => {
 
 
     //Declaring Submit button for Password Authentication
-    const LoginSubmitHandler = (e) => {
+    const PasswordSubmitHandler = (e) => {
         e.preventDefault();
         // console.log("Submit button clicked");
 
         if (newUser && accountUser.email && accountUser.password) {
-            const auth = getAuth();
             createUserWithEmailAndPassword(auth, accountUser.email, accountUser.password)
                 .then((userCredential) => {
                     console.log("User created:", userCredential.user);
@@ -122,7 +121,6 @@ const Login = () => {
                 });
         }
         if (!newUser && accountUser.email && accountUser.password) {
-            const auth = getAuth();
             signInWithEmailAndPassword(auth, accountUser.email, accountUser.password)
                 .then((userCredential) => {
                     // Signed in 
@@ -140,7 +138,6 @@ const Login = () => {
         }
     };
     const updateNameOfUser = name => {
-        const auth = getAuth();
         updateProfile(auth.currentUser, {
             displayName: name
         }).then(() => {
@@ -156,6 +153,9 @@ const Login = () => {
 
     return (
         <div style={{ textAlign: 'center' }} >
+
+
+            {/* Google Login Info Part */}
             {
                 accountUser.isSignedIn ?
                     <button onClick={GoogleSignOutHandler}>Sign out</button> :
@@ -163,17 +163,22 @@ const Login = () => {
             }
 
             {
-                accountUser.isSignedIn && <div> <p> {accountUser.name}, You are successfully Logged in. </p> <p>Your email: {accountUser.email} </p> <img src={accountUser.photo && accountUser.photo} alt="" /></div>
+                accountUser.isSignedIn &&
+                <div>
+                    <p> {accountUser.name}, You are successfully Logged in. </p>
+                    <p>Your email: {accountUser.email} </p>
+                    <img src={accountUser.photo && accountUser.photo} alt="" />
+                </div>
             }
 
-            <h1>Our Authentication System</h1>
+            <h1>Our Password Authentication System</h1>
 
             <input type="checkbox" onChange={() => setNewUser(!newUser)} name="newUser" id="newUser22" />
             <label htmlFor="newUser22">New User Sign Up</label>
 
             {/* Form Started */}
 
-            <form onSubmit={LoginSubmitHandler}>
+            <form onSubmit={PasswordSubmitHandler}>
                 {newUser && <input type="text" required name="name" onBlur={InputTextBlurHandler} id="" placeholder='your name' />}
                 <br />
                 <input type="text" name='email' onBlur={InputTextBlurHandler} required placeholder='Enter your email' />
