@@ -1,16 +1,17 @@
 import React, { useContext, useState } from 'react';
-import { initializeApp } from 'firebase/app'
-import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
+
 import { UserContext } from '../../App';
-import firebaseConfig from '../../utilities/firebaseConfig';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { GoogleSignInHandler, GoogleSignOutHandler, signInWithEmailAndPasswordRefactored } from './loginManager';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+
 
 
 const Login = () => {
-    const app = initializeApp(firebaseConfig)
+
     const location = useLocation();
     const navigate = useNavigate();
-    const auth = getAuth(app);
+
     const [loggedInUserShared, setLoggedInUserShared] = useContext(UserContext);
     const [newUser, setNewUser] = useState(false);
     const [accountUser, setAccountUser] = useState({
@@ -23,61 +24,33 @@ const Login = () => {
         success: false,
         error: '',
     });
-
-    const GoogleSignInHandler = () => {
-        const provider = new GoogleAuthProvider();
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                console.log(result)
-                const token = credential.accessToken;
-                // The signed-in user info.
-                // console.log(token)
-                if (result.user) {
-                    // IdP data available using getAdditionalUserInfo(result)
-                    //This below part ↓↓↓ is not included in firebase docs 
-                    //destructing the result.user object (from the remote server)
-                    const { displayName, photoURL, email } = result.user;
-                    const signedInUser = {
-                        isSignedIn: true,
-                        name: displayName,
-                        email: email,
-                        photo: photoURL,
-                    }
-                    setAccountUser(signedInUser)
-                    setLoggedInUserShared(signedInUser)
-                    navigate(location.state?.from || "/", { replace: true });
-                    // console.log(accountUser)
-                }
-
+    const GoogleSignInHandlerImprted = () => {
+        GoogleSignInHandler()
+            .then(response => {
+                setAccountUser(response)
+                setLoggedInUserShared(response)
+                navigate(location.state?.from || "/", { replace: true });
             })
-            .catch((error) => {
-                // Handle Errors here.
-                const errorMessage = error.message;
-                console.log(errorMessage)
+    }
+    const GoogleSignOutHandlerImported = () => {
+        GoogleSignOutHandler()
+            .then(response => {
+                setAccountUser(response)
+                setLoggedInUserShared(response)
+            })
+    }
+    const newCreateUserWithEmailAndPasswordImported = () => {
+        createUserWithEmailAndPassword(accountUser, setAccountUser)
+    }
+    const signInWithEmailAndPasswordRefactoredImported = (accountUser, setAccountUser) => {
+        signInWithEmailAndPasswordRefactored()
+            .then(response => {
+                setAccountUser(response)
+                setLoggedInUserShared(response)
+                navigate(location.state?.from || "/", { replace: true });
             })
     }
 
-
-    const GoogleSignOutHandler = () => {
-        signOut(auth)
-            .then(() => {
-
-                const signedOutUser = {
-                    inSignedIn: false,
-                    name: '',
-                    email: '',
-                    photo: ''
-                }
-                setAccountUser(signedOutUser)
-                setLoggedInUserShared(signedOutUser)
-            })
-            .catch((error) => {
-                // An error happened.
-
-            })
-    }
     const InputTextBlurHandler = (event) => {
         let isFieldValid = true;
         if (event.target.name === 'email') {
@@ -103,56 +76,12 @@ const Login = () => {
         // console.log("Submit button clicked");
 
         if (newUser && accountUser.email && accountUser.password) {
-            createUserWithEmailAndPassword(auth, accountUser.email, accountUser.password)
-                .then((userCredential) => {
-                    console.log("User created:", userCredential.user);
-
-                    const newUserInfo = { ...accountUser, success: true, error: '' };
-                    setAccountUser(newUserInfo);
-
-                    // Signed up
-                    const user = userCredential.user;
-                    console.log(user.email, user.displayName);
-                    updateNameOfUser(accountUser.name)
-                })
-                .catch((error) => {
-                    console.log("Error creating users:", error.message);
-
-                    const newUserInfo = { ...accountUser, error: error.message, success: false };
-                    setAccountUser(newUserInfo);
-                });
+            newCreateUserWithEmailAndPasswordImported()
         }
         if (!newUser && accountUser.email && accountUser.password) {
-            signInWithEmailAndPassword(auth, accountUser.email, accountUser.password)
-                .then((userCredential) => {
-                    // Signed in 
-                    const user = userCredential.user;
-                    const newUserInfo = { ...accountUser, name: user.displayName, success: true, error: '' }
-                    setAccountUser(newUserInfo)
-                    setLoggedInUserShared(newUserInfo)
-                    navigate(location.state?.from || "/", { replace: true });
-
-
-                    // ...
-                })
-                .catch((error) => {
-                    const newUserInfo = { ...accountUser, success: false, error: error.message }
-                    setAccountUser(newUserInfo)
-                });
+            signInWithEmailAndPasswordRefactoredImported()
         }
     };
-    const updateNameOfUser = name => {
-        updateProfile(auth.currentUser, {
-            displayName: name
-        }).then(() => {
-            // Profile updated!
-            // ...
-        }).catch((error) => {
-            // An error occurred
-            // ...
-        });
-
-    }
 
     console.log(location.state?.from)
     return (
@@ -162,8 +91,8 @@ const Login = () => {
             {/* Google Login Info Part */}
             {
                 accountUser.isSignedIn ?
-                    <button onClick={GoogleSignOutHandler}>Sign out</button> :
-                    <button onClick={GoogleSignInHandler}>Sign in with Google</button>
+                    <button onClick={GoogleSignOutHandlerImported}>Sign out</button> :
+                    <button onClick={GoogleSignInHandlerImprted}>Sign in with Google</button>
             }
 
             {
