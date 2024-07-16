@@ -5,6 +5,7 @@ import { UserContext } from "../../App";
 const PrivateRoute = ({ Component, ...rest }) => {
     const location = useLocation();
     const navigate = useNavigate();
+    // eslint-disable-next-line no-unused-vars
     const [loggedInUserShared, setLoggedInUserShared] = useContext(UserContext);
     console.log(loggedInUserShared)
 

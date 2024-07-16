@@ -2,8 +2,7 @@ import React, { useContext, useState } from 'react';
 
 import { UserContext } from '../../App';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { GoogleSignInHandler, GoogleSignOutHandler, signInWithEmailAndPasswordRefactored } from './loginManager';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { GoogleSignInHandler, GoogleSignOutHandler, newCreateUserWithEmailAndPassword, signInWithEmailAndPasswordRefactored } from './loginManager';
 
 
 
@@ -12,6 +11,7 @@ const Login = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
+    // eslint-disable-next-line no-unused-vars
     const [loggedInUserShared, setLoggedInUserShared] = useContext(UserContext);
     const [newUser, setNewUser] = useState(false);
     const [accountUser, setAccountUser] = useState({
@@ -40,10 +40,14 @@ const Login = () => {
             })
     }
     const newCreateUserWithEmailAndPasswordImported = () => {
-        createUserWithEmailAndPassword(accountUser, setAccountUser)
+        newCreateUserWithEmailAndPassword(accountUser.name, accountUser.email, accountUser.password)
+            .then(response => {
+                setAccountUser(response)
+                setLoggedInUserShared(response)
+            })
     }
-    const signInWithEmailAndPasswordRefactoredImported = (accountUser, setAccountUser) => {
-        signInWithEmailAndPasswordRefactored()
+    const signInWithEmailAndPasswordRefactoredImported = () => {
+        signInWithEmailAndPasswordRefactored(accountUser.email, accountUser.password)
             .then(response => {
                 setAccountUser(response)
                 setLoggedInUserShared(response)

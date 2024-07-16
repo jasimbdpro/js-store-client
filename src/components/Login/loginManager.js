@@ -11,6 +11,7 @@ export const GoogleSignInHandler = () => {
             // This gives you a Google Access Token. You can use it to access the Google API.
             const credential = GoogleAuthProvider.credentialFromResult(result);
             console.log(result)
+            // eslint-disable-next-line no-unused-vars
             const token = credential.accessToken;
             // The signed-in user info.
             // console.log(token)
@@ -54,24 +55,19 @@ export const GoogleSignOutHandler = () => {
 
         })
 }
-export const newCreateUserWithEmailAndPassword = (demoUser, setDemoUser) => {
-    return createUserWithEmailAndPassword(auth, demoUser.email, demoUser.password)
+export const newCreateUserWithEmailAndPassword = (name, email, password) => {
+    return createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             console.log("User created:", userCredential.user);
 
-            const newUserInfo = { ...demoUser, success: true, error: '' };
-            setDemoUser(newUserInfo);
+            const newUserInfo = { ...userCredential.user, success: true, error: '' };
+            updateNameOfUser(name)
+            return newUserInfo
 
-            // Signed up
-            const user = userCredential.user;
-            console.log(user.email, user.displayName);
-            updateNameOfUser(demoUser.name)
         })
         .catch((error) => {
             console.log("Error creating users:", error.message);
 
-            const newUserInfo = { ...demoUser, error: error.message, success: false };
-            setDemoUser(newUserInfo);
         });
 }
 export const updateNameOfUser = name => {
@@ -86,12 +82,11 @@ export const updateNameOfUser = name => {
     });
 
 }
-export const signInWithEmailAndPasswordRefactored = (demoUser, setDemoUser) => {
-    return signInWithEmailAndPassword(auth, demoUser.email, demoUser.password)
+export const signInWithEmailAndPasswordRefactored = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in 
-            const user = userCredential.user;
-            const newUserInfo = { ...demoUser, name: user.displayName, success: true, error: '' }
+            const newUserInfo = { ...userCredential.user, name: userCredential.user.displayName, success: true, error: '' }
             return newUserInfo;
 
 
@@ -99,7 +94,6 @@ export const signInWithEmailAndPasswordRefactored = (demoUser, setDemoUser) => {
             // ...
         })
         .catch((error) => {
-            const newUserInfo = { ...demoUser, success: false, error: error.message }
-            setDemoUser(newUserInfo)
+            //error here
         });
 }
