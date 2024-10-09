@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import './Shop.css';
-import productData from '../../fakeData/products.json'
 import Product from '../Product/Product';
 import Cart from '../Cart/Cart';
 import { addToDb, getShoppingCart } from '../../utilities/fakedb';
 import { Link } from 'react-router-dom';
 
 const Shop = () => {
+
+    const [productData, setProductData] = useState([])
+    useEffect(() => {
+        fetch('https://raw.githubusercontent.com/jasimbdpro/github-as-a-cdn/main/uploads/products9wciuqw34987qwhserqwierywef.json')
+            .then(res => res.json())
+            .then(data => setProductData(data))
+    })
+
     const products = productData.slice(0, 15);
     const [cart, setCart] = useState([]);
     useEffect(() => {

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { deleteShoppingCart, getShoppingCart, removeFromDb } from '../../utilities/fakedb';
-import productData from '../../fakeData/products.json'
 import ReviewItem from '../ReviewItem/ReviewItem';
 import Cart from '../Cart/Cart';
 import "./Review.css"
@@ -10,6 +9,13 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Review = () => {
+
+    const [productData, setProductData] = useState([])
+    useEffect(() => {
+        fetch('https://raw.githubusercontent.com/jasimbdpro/github-as-a-cdn/main/uploads/products9wciuqw34987qwhserqwierywef.json')
+            .then(res => res.json())
+            .then(data => setProductData(data))
+    })
 
     const navigate = useNavigate();
     const [cart, setCart] = useState([]);
