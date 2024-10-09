@@ -3,7 +3,7 @@ import './App.css';
 import Header from "./components/Header/Header";
 import Shop from './components/Shop/Shop';
 import {
-  HashRouter,
+  BrowserRouter,
   Routes,
   Route
 } from "react-router-dom";
@@ -23,7 +23,7 @@ function App() {
 
   return (
     <UserContext.Provider value={[loggedInUserShared, setLoggedInUserShared]}>
-      <HashRouter>
+      <BrowserRouter>
         <p>Email: {loggedInUserShared.name} </p>
 
         <Header></Header>
@@ -43,7 +43,7 @@ function App() {
 
         </Routes>
 
-      </HashRouter>
+      </BrowserRouter>
     </UserContext.Provider >
   );
 }
