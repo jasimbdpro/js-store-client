@@ -1,5 +1,6 @@
 import React, { createContext, useState } from 'react';
 import './App.css';
+
 import Header from "./components/Header/Header";
 import Shop from './components/Shop/Shop';
 import {
@@ -26,20 +27,20 @@ function App() {
       <BrowserRouter>
         <p>Email: {loggedInUserShared.name} </p>
 
-        <Header></Header>
+        <Header />
         <Routes>
-          <Route exact path="/" element={<Shop></Shop>} />
-          <Route path="/shop" element={<Shop></Shop>} />
-          <Route path="/review" element={<Review></Review>} />
+          <Route exact path="/" element={<Shop />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/review" element={<Review />} />
           <Route path="/inventory" element={
             <PrivateRoute Component={Inventory} />
           } />
           <Route path="/shipment" element={
             <PrivateRoute Component={Shipment} />
           } />
-          <Route path="/login" element={<Login></Login>} />
-          <Route path="/product/:productId" element={<ProductDetail></ProductDetail>} />
-          <Route path="*" element={<NotFound></NotFound>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/product/:productId" element={<ProductDetail />} />
+          <Route path="*" element={<NotFound />} />
 
         </Routes>
 
