@@ -12,10 +12,10 @@ const Shipment = (props) => {
 
     return (
         <form className='ship-form' onSubmit={handleSubmit(onSubmit)}>
-            <input name='name' defaultValue={loggedInUserShared.name} {...register("example")} />
+            <input name='name' defaultValue={loggedInUserShared?.name} {...register("example")} />
             {errors.name && <span className='error'>This field is required</span>}
 
-            <input name='email' defaultValue={loggedInUserShared.email} {...register("example")} />
+            <input name='email' defaultValue={loggedInUserShared?.email} {...register("example")} />
             {errors.email && <span className='error'>This field is required</span>}
 
             <input name='address'  {...register("example")} />
