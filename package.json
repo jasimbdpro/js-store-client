@@ -19,8 +19,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.52.1",
-    "react-router-dom": "^6.25.1",
-    "rollup": "^4.24.2"
+    "react-router-dom": "^6.25.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.12.0",
@@ -32,6 +31,7 @@
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.11.0",
+    "rollup": "^4.24.2",
     "vite": "^5.4.1"
   }
 }
